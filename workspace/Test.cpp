@@ -3,14 +3,26 @@
 using namespace std;
 
 int main(){
-  float a,b,c,d, resultado = 0;
-  cout <<"Ingrese numero a"; cin >> a;
-  cout << "Ingrese numero b "; cin >>b;
-  cout << "Ingrese numero c "; cin >>c;
-  cout << "Ingrese numero d "; cin >>d;
+  char letra;
 
-  cout.precision(1);
-  resultado = (a+b)/(c+d);
-  cout << "El resultado es : "<< resultado<<endl;
+  cout << "digite un caracter";
+  cin >>letra;
+  switch(letra){
+    case 'a':
+    case 'e':
+    case 'i':
+    case 'o':
+    case 'u': cout << "Este una vocal minusculaa";break;
+    case 'A':
+    case 'E':
+    case 'I':
+    case 'O':
+    case 'U': cout << "es una vocal mayuscula";break;
+
+    default: cout<< "no es una vocal";
+
+  }
+
+
   return 0;
 }
