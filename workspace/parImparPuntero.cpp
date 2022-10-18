@@ -3,15 +3,13 @@
 using namespace std;
 
 int main(){
-  int numero, *dir_num;
+  int numeros[] = {1,2,3,4,5};
 
-  cout << "ingrese el num" ; cin>> numero;
-  dir_num = &numero;
-  if(*dir_num%2==0){
-    cout<<"el numero es par "<<endl;
-    cout << "su poisoicones es "<< dir_num;
+  int *dir_num ;
+  //dir_num = &numeros[0];
+  dir_num = numeros;
+  for (int i=0;i<5;i++){
+    cout << *dir_num++<<endl;
   }
-  else{
-    cout <<"el numero es impar"<<endl;
-  }
+
 }
