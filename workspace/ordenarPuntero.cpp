@@ -5,13 +5,12 @@ using namespace std;
 void pedirDatos();
 int numElementos;
 int *elemento;
-void ordenar(int *,int);
 void imprimir(int * ,int);
+void buscar(int*,int);
 
 int main(){
   pedirDatos();
-  ordenar(elemento,numElementos);
-  imprimir(elemento,numElementos);
+  buscar(elemento,numElementos);
   delete []elemento;
 
   return 0;
@@ -34,15 +33,17 @@ void pedirDatos(){
   }
   cout<<"\nsalio de pedirDatos\n"; // en consola de Linux se pierde este parrago haceidno creer que estamos en un bucle 
 }
-void ordenar(int *elemento, int numElementos){
-  cout <<"\nentro ordenas\n";
-  for (int i=0;i<numElementos;i++){
-    for (int k=0;k<numElementos-1;k++){
-      if(*(elemento+k)>*(elemento+k+1)){
-	int aux = *(elemento+k);
-	*(elemento+k)= *(elemento+k+1);
-	*(elemento+k+1) = aux;
-      }
+
+void buscar(int *arreglo,int numElementos){
+  int buscado;
+  cout << " ingrese el elemento a buscar";
+  cin >> buscado;
+  for ( int i =0;i<numElementos;i++){
+    cout << *(arreglo+i)<<endl;
+    if(*(arreglo+i)==buscado){
+      cout << "el elemento ha sido encontrado en la posicion"<<i;
+      break;
     }
   }
+  cout << "salio de buscar";
 }
