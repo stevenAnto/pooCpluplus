@@ -7,6 +7,7 @@
  */
 #include<iostream>
 #include<stdlib.h>
+#include<math.h>
 using namespace std;
 
 
@@ -39,42 +40,81 @@ int main(){
 }
 
 void pedirDatos(){
+  int **puntero_matrizP1,**puntero_matrizP2;
   cout<<"Llenando matriz1\n";
   cout << "digite el numero de filas";
-  cin >> nfilas;
+  int nfil1,ncol1,nfil2,ncol2;
+  cin >> nfil1;
   cout << "digite el numero de columnas";
-  cin >> ncol;
+  cin >> ncol1;
 
-  puntero_matriz1 = new int*[nfilas]; //reservando memoria para las filas
-  for (int i=0;i<4;i++){
-    puntero_matriz1[i] = new int[ncol]; //reservando memeoria para laas columnas
+  puntero_matrizP1 = new int*[nfil1]; //reservando memoria para las filas
+  for (int i=0;i<nfil1;i++){
+    puntero_matrizP1[i] = new int[ncol1]; //reservando memeoria para laas columnas
   }
   cout <<"\n digitando elementos de la matriz";
-  for (int i=0;i<4;i++){
-    for (int j=0;j<4;j++){
+  for (int i=0;i<nfil1;i++){
+    for (int j=0;j<ncol1;j++){
       cout << " ingrese datos"<<"["<<i<<"]"<<"["<<j<<"]";
       //*(*(puntero_matriz1+i)+j)= 1;
-      cin >>*(*(puntero_matriz1+i)+j);
+      cin >>*(*(puntero_matrizP1+i)+j);
     }
   }
+  imprimir(puntero_matrizP1,nfil1,ncol1);
   cout<<"\nLlenando para la segunda matriz\n";
   cout << "digite el numero de filas";
-  cin >> nfilas;
+  cin >> nfil2;
   cout << "digite el numero de columnas";
-  cin >> ncol;
+  cin >> ncol2;
 
+  puntero_matrizP2 = new int*[nfil2]; //reservando memoria para las filas
+  for (int i=0;i<nfil2;i++){
+    puntero_matrizP2[i] = new int[ncol2]; //reservando memeoria para laas columnas
+  }
+  cout <<"\n digitando elementos de la matriz";
+  for (int i=0;i<nfil2;i++){
+    for (int j=0;j<ncol2;j++){
+      cout << " ingrese datos"<<"["<<i<<"]"<<"["<<j<<"]";
+      //*(*(puntero_matriz2+i)+j)= 1;
+      cin >>*(*(puntero_matrizP2+i)+j);
+    }
+  }
+  imprimir(puntero_matrizP2,nfil2,ncol2);
+  //Validaciond de filas y columnas 
+  int k=1;
+  int tfilas,tcol;
+  if(nfil1>nfil2) tfilas=nfil1;
+  else tfilas=nfil2;
+  if(ncol1>ncol2) tcol=ncol1;
+  else tcol=ncol2;
+  while(tfilas>pow(2,k++)){
+
+  }
+  nfilas= pow(2,k);
+  ncol= pow(2,k);
+  cout <<"las matrices son del siguiente orden"<<nfilas<<","<<ncol<<endl;
+  puntero_matriz1 = new int*[nfilas]; //reservando memoria para las filas
+  for (int i=0;i<nfilas;i++){
+    puntero_matriz1[i] = new int[ncol]; //reservando memeoria para laas columnas
+  }
+  imprimir(puntero_matriz1,nfilas,ncol);
+  for (int i=0;i<nfil1;i++){
+    for (int j=0;j<ncol1;j++){
+      *(*(puntero_matriz1+i)+j)=*(*(puntero_matrizP1+i)+j);
+    }
+  }
+  imprimir(puntero_matriz1,nfilas,ncol);
+  //segundo
   puntero_matriz2 = new int*[nfilas]; //reservando memoria para las filas
   for (int i=0;i<nfilas;i++){
     puntero_matriz2[i] = new int[ncol]; //reservando memeoria para laas columnas
   }
-  cout <<"\n digitando elementos de la matriz";
-  for (int i=0;i<4;i++){
-    for (int j=0;j<4;j++){
-      cout << " ingrese datos"<<"["<<i<<"]"<<"["<<j<<"]";
-      //*(*(puntero_matriz2+i)+j)= 1;
-      cin >>*(*(puntero_matriz2+i)+j);
+  for (int i=0;i<nfil2;i++){
+    for (int j=0;j<ncol2;j++){
+      *(*(puntero_matriz2+i)+j)=*(*(puntero_matrizP2+i)+j);
     }
   }
+  imprimir(puntero_matriz1,nfilas,ncol);
   ////aqui se llenara la nueva matriz
   puntero_matrizr = new int*[nfilas]; //reservando memoria para las filas
   for (int i=0;i<nfilas;i++){
