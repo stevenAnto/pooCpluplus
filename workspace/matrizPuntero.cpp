@@ -1,9 +1,9 @@
 /*me uso c++ con edito Vim
  * Librerias iostream y stdlib.h para matrices dinamicas
  * Nombre: Esteven antonio ralcina Puma
- * rUI :20074496
+ * CUI :20074496
  * GUIa DE LabORaTORIO N`4
- * Ejercicio 1
+ * Ejercicio 2
  */
 #include<iostream>
 #include<stdlib.h>
@@ -21,7 +21,14 @@ int **puntero_matriz1,**puntero_matriz2,nfilas,ncol, **puntero_matrizr;
 int main(){
   pedirDatos();
   //  sumarMatrices(puntero_matriz1,puntero_matriz2,puntero_matrizr,nfilas,ncol);
+
+  //imprimir(puntero_matrizr,nfilas,ncol);
+  cout<<"matriz1"<<endl;
+  imprimir(puntero_matriz1,nfilas,ncol);
+  cout<<"matriz2"<<endl;
+  imprimir(puntero_matriz2,nfilas,ncol);
   strassen(puntero_matriz1,puntero_matriz2,puntero_matrizr,nfilas,ncol);
+
   imprimir(puntero_matrizr,nfilas,ncol);
   for(int i=0;i<nfilas;i++){
     delete[] puntero_matrizr[i];
@@ -39,13 +46,14 @@ void pedirDatos(){
   cin >> ncol;
 
   puntero_matriz1 = new int*[nfilas]; //reservando memoria para las filas
-  for (int i=0;i<nfilas;i++){
+  for (int i=0;i<4;i++){
     puntero_matriz1[i] = new int[ncol]; //reservando memeoria para laas columnas
   }
   cout <<"\n digitando elementos de la matriz";
-  for (int i=0;i<nfilas;i++){
-    for (int j=0;j<ncol;j++){
+  for (int i=0;i<4;i++){
+    for (int j=0;j<4;j++){
       cout << " ingrese datos"<<"["<<i<<"]"<<"["<<j<<"]";
+      //*(*(puntero_matriz1+i)+j)= 1;
       cin >>*(*(puntero_matriz1+i)+j);
     }
   }
@@ -60,9 +68,10 @@ void pedirDatos(){
     puntero_matriz2[i] = new int[ncol]; //reservando memeoria para laas columnas
   }
   cout <<"\n digitando elementos de la matriz";
-  for (int i=0;i<nfilas;i++){
-    for (int j=0;j<ncol;j++){
+  for (int i=0;i<4;i++){
+    for (int j=0;j<4;j++){
       cout << " ingrese datos"<<"["<<i<<"]"<<"["<<j<<"]";
+      //*(*(puntero_matriz2+i)+j)= 1;
       cin >>*(*(puntero_matriz2+i)+j);
     }
   }
@@ -73,20 +82,33 @@ void pedirDatos(){
   }
 }
 void sumarMatrices(int **puntero_matriz1,int **puntero_matriz2,int **puntero_matrizr, int nfilas, int ncolu){
+  cout<<"Suma Matriz1 "<<endl;
+  imprimir(puntero_matriz1,nfilas,ncolu);
+  cout<<"Matriz 2"<<endl;
+  imprimir(puntero_matriz2,nfilas,ncolu);
   for(int i=0;i<nfilas;i++){
     for(int j=0;j<ncol;j++){
       *(*(puntero_matrizr+i)+j) = *(*(puntero_matriz1+i)+j)+*(*(puntero_matriz2+i)+j);
       // *(*(puntero_matriz1+i)+j) += *(*(puntero_matriz2+i)+j);
     }
   }
+  cout<<"resultado de la suma\n";
+  imprimir(puntero_matrizr,nfilas,ncolu);
+  cout<<"salido sumar"<<endl;
 }
 void restarMatrices(int **puntero_matriz1,int **puntero_matriz2,int **puntero_matrizr, int nfilas, int ncolu){
+  cout<<"Resta Matriz1 "<<endl;
+  imprimir(puntero_matriz1,nfilas,ncolu);
+  cout<<"Resta Matriz2 "<<endl;
+  imprimir(puntero_matriz2,nfilas,ncolu);
   for(int i=0;i<nfilas;i++){
     for(int j=0;j<ncol;j++){
       *(*(puntero_matrizr+i)+j) = *(*(puntero_matriz1+i)+j)-*(*(puntero_matriz2+i)+j);
       // *(*(puntero_matriz1+i)+j) += *(*(puntero_matriz2+i)+j);
     }
   }
+  cout<<"resultado de la resta\n";
+  imprimir(puntero_matrizr,nfilas,ncolu);
 }
 void multiMatriz22(int **a,int **b,int **puntero_matrizr, int nfilas, int ncolu){
   int m1=( a[0][0]+a[1][1])*(b[0][0]+b[1][1]);
@@ -104,12 +126,13 @@ void multiMatriz22(int **a,int **b,int **puntero_matrizr, int nfilas, int ncolu)
 void imprimir ( int **puntero_matriz, int nfilas, int ncol){
   for(int i=0;i<nfilas;i++){
     for(int j=0;j<ncol;j++){
-      cout << *(*(puntero_matriz+i)+j)<<",";//puntero_matriz[i][j]
+      cout <<"\t"<< *(*(puntero_matriz+i)+j)<<"\t";//puntero_matriz[i][j]
     }
     cout<<endl;
   }
 }
 void strassen(int **a, int **b, int **r, int nfilas, int ncol){
+  cout << "ingreso a recursivstra" <<endl;
   //me divide las matrices en 4 partes
   int **a00 ;
   int **a01 ;
@@ -192,7 +215,7 @@ void strassen(int **a, int **b, int **r, int nfilas, int ncol){
   else{
     //dividimos la matriz que es cuadradada
     for(int i=0;i<nfilas/2;i++){
-      for(int j=0;j<nfilas/2;j++){
+      for(int j=0;j<ncol/2;j++){
 	a00 [i][j]=a[i][j];
 	a01 [i][j]=a[i][j+nfilas/2];
 	a10 [i][j]=a[i+nfilas/2][j];
@@ -203,41 +226,70 @@ void strassen(int **a, int **b, int **r, int nfilas, int ncol){
 	b11 [i][j]=b[i+nfilas/2][j+nfilas/2];
       }
     }
-    sumarMatrices(a00,a11, t1,nfilas/2,ncol);
-    sumarMatrices(a00,b11, t2,nfilas/2,ncol);
-    strassen(t1,t2,m1,nfilas/2,ncol);
+    cout<<"se calcula m1:\n";
+    sumarMatrices(a00,a11, t1,nfilas/2,ncol/2);
+    sumarMatrices(b00,b11, t2,nfilas/2,ncol/2);
+    strassen(t1,t2,m1,nfilas/2,ncol/2);
+    cout <<"m1:\n";
+    imprimir(m1,nfilas/2,ncol/2);
 
-    sumarMatrices(a10,a11,t1,nfilas/2,ncol);
-    strassen(t1,b00,m2,nfilas/2,ncol);
+    cout<<"se calcula m2:\n";
+    sumarMatrices(a10,a11,t1,nfilas/2,ncol/2);
+    strassen(t1,b00,m2,nfilas/2,ncol/2);
+    cout <<"m2:\n";
+    imprimir(m2,nfilas/2,ncol/2);
     /*m3=a11*(b12+b22)*/
-    restarMatrices(b01,b11,t1,nfilas/2,ncol);
-    strassen(a00,t1,m3,nfilas/2,ncol);
+    cout<<"se calcula m3:\n";
+    restarMatrices(b01,b11,t1,nfilas/2,ncol/2);
+    strassen(a00,t1,m3,nfilas/2,ncol/2);
+    cout <<"m3:\n";
+    imprimir(m3,nfilas/2,ncol/2);
     /*m4=a22×(b21+b11)*/
-    sumarMatrices(b10,b00,t1,nfilas/2,ncol);
-    strassen(a11,t1,m4,nfilas/2,ncol);
+    cout<<"se calcula m4:\n";
+    restarMatrices(b10,b00,t1,nfilas/2,ncol/2);
+    strassen(a11,t1,m4,nfilas/2,ncol/2);
+    cout <<"m4:\n";
+    imprimir(m1,nfilas/2,ncol/2);
     /*m5=(a11+a12)×b22*/
-    sumarMatrices(a00,a01,t1,nfilas/2,ncol);
+    cout<<"se calcula m5:\n";
+    sumarMatrices(a00,a01,t1,nfilas/2,ncol/2);
     strassen(t1,b11,m5,nfilas/2,ncol);
+    cout <<"m5:\n";
+    imprimir(m5,nfilas/2,ncol/2);
     /*m6=(a11+a22)×(b11+b22)*/
-    restarMatrices(a10,a00,t1,nfilas/2,ncol);
-    sumarMatrices(b00,b01,t2,nfilas/2,ncol);
-    strassen(t1,t2,m6,nfilas/2,ncol);
+    cout<<"se calcula m6:\n";
+    restarMatrices(a10,a00,t1,nfilas/2,ncol/2);
+    sumarMatrices(b00,b01,t2,nfilas/2,ncol/2);
+    strassen(t1,t2,m6,nfilas/2,ncol/2);
+    cout <<"m6:\n";
+    imprimir(m6,nfilas/2,ncol/2);
     /*m7=(a12+a22)×(b21+b22)*/
-    restarMatrices(a01,a11,t1,nfilas/2,ncol);
-    sumarMatrices(b10,b11,t2,nfilas/2,ncol);
-    strassen(t1,t2,m7,nfilas/2,ncol);
+    cout<<"se calcula m7:\n";
+    restarMatrices(a01,a11,t1,nfilas/2,ncol/2);
+    sumarMatrices(b10,b11,t2,nfilas/2,ncol/2);
+    strassen(t1,t2,m7,nfilas/2,ncol/2);
+    cout <<"m7:\n";
+    imprimir(m7,nfilas/2,ncol/2);
     /*r11 = m1+m4-m5+m7*/
-    sumarMatrices(m1,m4,t1,nfilas/2,ncol);
-    restarMatrices(m7,m5,t2,nfilas/2,ncol);
-    sumarMatrices(t1,t2,r00,nfilas/2,ncol);
+    sumarMatrices(m1,m4,t1,nfilas/2,ncol/2);
+    restarMatrices(m7,m5,t2,nfilas/2,ncol/2);
+    sumarMatrices(t1,t2,r00,nfilas/2,ncol/2);
     /*r12 = m3+m5*/
-    sumarMatrices(m3,m5,r01,nfilas/2,ncol);
+    sumarMatrices(m3,m5,r01,nfilas/2,ncol/2);
     /*r21 = m2+m4*/
-    sumarMatrices(m2,m4,r10,nfilas/2,ncol);
+    sumarMatrices(m2,m4,r10,nfilas/2,ncol/2);
     /*r22 = m1-m2+m3+m6*/
-    restarMatrices(m1,m2,t1,nfilas/2,ncol);
-    sumarMatrices(m3,m6,t2,nfilas/2,ncol);
-    sumarMatrices(t1,t2,r11,nfilas/2,ncol);
+    restarMatrices(m1,m2,t1,nfilas/2,ncol/2);
+    sumarMatrices(m3,m6,t2,nfilas/2,ncol/2);
+    sumarMatrices(t1,t2,r11,nfilas/2,ncol/2);
 
+    for (int i=0;i<nfilas/2;i++){
+      for (int j=0;j<ncol/2;j++){
+	r[i][j]=r00[i][j];
+	r[i][j+nfilas/2]=r01[i][j];
+	r[i+nfilas/2][j]=r10[i][j];
+	r[i+nfilas/2][j+nfilas/2]=r11[i][j];
+      }
+    }
   }
 }
