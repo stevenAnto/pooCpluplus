@@ -1,7 +1,7 @@
 /*me uso c++ con edito Vim
  * Librerias iostream y stdlib.h para matrices dinamicas
+ * libre math.h
  * Nombre: Esteven antonio ralcina Puma
- * CUI :20074496
  * GUIa DE LabORaTORIO N`4
  * Ejercicio 2
  */
