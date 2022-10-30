@@ -1,3 +1,4 @@
+//el arreglo es una variable global, arreglar para que sea parte de la funcion
 //Generar una permutacion recursivamente
 #include<iostream>
 using namespace std;
