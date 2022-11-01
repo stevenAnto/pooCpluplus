@@ -4,14 +4,15 @@
 using namespace std;
 
 const int V=5;//Numero de vertices
-int ancestro[V]; //Este arreglo se creo para representar los ancestros de determinados indices
-void imprimirVector(int []);
+int *ancestro = new int[V];
+ //Este arreglo se creo para representar los ancestros de determinados indices
+void imprimirVector(int* );
 //Encuentra el ancestro del indice ingresado
-int find(int);
+int buscarAncestro(int);
 //Esta f uncion establace un ancestro comun por encima de i, a j
 void unir(int,int);
 void kruskalMST(int [][V]);
-/*A travez de la funcion find, encontraremos un ancestro en comun de dos vertices con el apoyo del vector
+/*A travez de la funcion buscarAncestro, encontraremos un ancestro en comun de dos vertices con el apoyo del vector
  * ancestro y de esa manera ya verificaremos dicho vertice*/
 
 int main(){
@@ -33,17 +34,16 @@ void imprimirVector(int v[]){
   }
   cout<<endl;
 }
-int find(int i)
-{
+int buscarAncestro(int i){
   while (ancestro[i] != i)
     i = ancestro[i];
   return i;
 }
 void unir(int i, int j)
 {
-  int a = find(i);
+  int a = buscarAncestro(i);
   //cout <<"el valor de a es :"<<a<<endl;
-  int b = find(j);
+  int b = buscarAncestro(j);
   //cout <<"el valor de b es :"<<b<<endl;
   ancestro[a] = b;
 }
@@ -52,7 +52,7 @@ void kruskalMST(int cost[][V]){
 
   //incialialicamos el vector ancestro de tal manera que todos los vertices son disjuntos
   for (int i = 0; i < V; i++)
-    ancestro[i] = i;
+    *(ancestro+i)=i;
 
   imprimirVector(ancestro);
   int arista = 0;
@@ -60,8 +60,8 @@ void kruskalMST(int cost[][V]){
     int min = INT_MAX, a = -1, b = -1;
     for (int i = 0; i < V; i++) {
       for (int j = 0; j < V; j++) {
-	//la funcion find() de un vertice encuentra un ancestro en comun, si ya existe, obvia y pasa al siguiente
-	if (find(i) != find(j) && cost[i][j] < min) {
+	//la funcion buscarAncestro() de un vertice encuentra un ancestro en comun, si ya existe, obvia y pasa al siguiente
+	if (buscarAncestro(i) != buscarAncestro(j) && cost[i][j] < min) {
 	  min = cost[i][j];
 	  a = i;
 	  b = j;
@@ -76,6 +76,6 @@ void kruskalMST(int cost[][V]){
     cout<<endl;
     costominimo += min;
   }
-  cout << "\n minimo peso : "<<costominimo;
+  cout << "\n minimo costo "<<costominimo;
 }
 
